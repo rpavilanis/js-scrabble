@@ -1,4 +1,4 @@
-var Scrabble = function() {
+var Scrabble = function() {};
 
   var letterValues = {
   "A": 1, "E" : 1, "I": 1, "O": 1, "U": 1, "L": 1, "N": 1, "R": 1, "S": 1, "T": 1,
@@ -11,7 +11,7 @@ var Scrabble = function() {
   };
 
   /* create an array of strings (letters) from word and then loop through letters array in order to determine total score (by referencing letterValues function) */
-  this.score = function(word) {
+Scrabble.score = function(word) {
     if (word) {
       var wordToScore = word.toUpperCase();
       var total = 0;
@@ -27,7 +27,7 @@ var Scrabble = function() {
 
   /* initialize two variables in order to hold max_score and max_scoring_word then iterate through the array_of_words and use if statements to determine when the word and score are stored in the local variables
   use tie-breaking logic in if statements to determine when to score word/score into variable */
-  this.highestScore = function(array_of_words) {
+  Scrabble.highestScore = function(array_of_words) {
     var max_score = 0;
     var max_scoring_word = "";
 
@@ -51,7 +51,6 @@ var Scrabble = function() {
       return max_scoring_word;
     };
 
-};
 
 
 Player = function(name) {
@@ -72,22 +71,21 @@ Player.prototype.play = function(word) {
   }
     else {
       var lettersLength = word.length;
-      var playersScore = new Scrabble();
       for (var i = 0; i < lettersLength; i++) {
         if (this.pickedTiles.includes(word.charAt(i))) {
           this.pickedTiles.splice(this.pickedTiles.word.charAt(i), 1);
         }
           this.wordsByPlayer.push(word);
-          this.wordScore = playersScore.score(word);
+          this.wordScore = Scrabble.score(word);
           return this.wordScore;
       }
   }
 };
 
 Player.prototype.total = function() {
-  var playersScore = new Scrabble();
+  // var playersScore = new Scrabble();
   for (var i = 0; i < this.wordsByPlayer.length; i++) {
-    this.totalScore += playersScore.score(this.wordsByPlayer[i]);
+    this.totalScore += Scrabble.score(this.wordsByPlayer[i]);
   }
   return this.totalScore;
 };
@@ -101,14 +99,12 @@ Player.prototype.hasWon = function() {
 };
 
 Player.prototype.highestScoringWord  = function() {
-  var playersScore = new Scrabble();
-  return playersScore.highestScore(this.wordsByPlayer);
+  return Scrabble.highestScore(this.wordsByPlayer);
 };
 
 Player.prototype.highestWordScore = function() {
   high_score_word = this.highestScoringWord();
-  var playersScore = new Scrabble();
-  highest_score = playersScore.score(high_score_word);
+  highest_score = Scrabble.score(high_score_word);
   return highest_score;
 
 };
@@ -153,17 +149,16 @@ TileBag.prototype.tilesRemaining = function() {
 
 // TESTING SCRABBLE
 
-var scrabbleGame = new Scrabble();
 // test normal word
-console.log(scrabbleGame.score("hippo"));
+console.log(Scrabble.score("hippo"));
 // test 7-letter word
-console.log(scrabbleGame.score("created"));
+console.log(Scrabble.score("created"));
 // test normal array with no 7-letter words or ties
-console.log(scrabbleGame.highestScore(["hippo", "crayon", "cat"]));
+console.log(Scrabble.highestScore(["hippo", "crayon", "cat"]));
 // test array with a 7-letter words
-console.log(scrabbleGame.highestScore(["created", "crayon", "cat"]));
+console.log(Scrabble.highestScore(["created", "crayon", "cat"]));
 // test array with a tie
-console.log(scrabbleGame.highestScore(["waves", "crayon", "cat"]));
+console.log(Scrabble.highestScore(["waves", "crayon", "cat"]));
 
 // TESTING PLAYER
 var player1 = new Player("Rachel");
